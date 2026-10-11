@@ -1,13 +1,15 @@
 
 import Navbar from "@/components/layout/Navbar";
 import CategorySection from "@/components/home/CategorySection";
+import ProductGrid from "@/components/home/ProductGrid";
+import MarketPrice from "@/components/home/MarketPrice";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50">
       <Navbar />
 
-      <section className="mx-auto max-w-7xl px-4 py-20">
+      <section className="mx-auto max-w-7xl px-4 py-16">
         <div className="rounded-3xl bg-green-700 px-6 py-16 text-center text-white md:px-16">
           <h1 className="text-4xl font-extrabold md:text-6xl">
             Know Your Bazar Price
@@ -25,6 +27,8 @@ export default function Home() {
       </section>
 
       <CategorySection />
+      <ProductGrid />
+      <MarketPrice />
     </main>
   );
 }
