@@ -1,12 +1,15 @@
 
 import Link from "next/link";
+import { headers } from "next/headers";
 
+import { auth } from "@/lib/auth";
 import { getCategories, getProducts } from "@/lib/api";
 import type { Category, Product } from "@/lib/types";
 
 import Container from "@/components/ui/Container";
 import CategoryNavigation from "./CategoryNavigation";
 import PriceTicker from "./PriceTicker";
+import AuthActions from "./AuthActions";
 
 export default async function Navbar() {
   let categories: Category[] = [];
@@ -21,6 +24,10 @@ export default async function Navbar() {
     console.error("Failed to load navbar data:", error);
   }
 
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
   const today = new Intl.DateTimeFormat("bn-BD", {
     weekday: "long",
     day: "numeric",
@@ -31,8 +38,6 @@ export default async function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white shadow-sm">
-
-      {/* Main Navbar */}
       <Container>
         <div className="flex min-h-[76px] items-center justify-between gap-4 py-3">
 
@@ -51,22 +56,17 @@ export default async function Navbar() {
             </p>
           </Link>
 
-          {/* Authentication Buttons */}
-          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <Link
-              href="/signin"
-              className="rounded-lg border border-green-700 px-3 py-2 text-xs font-semibold text-green-800 transition-colors hover:bg-green-50 sm:px-5 sm:text-sm"
-            >
-              সাইন ইন
-            </Link>
-
-            <Link
-              href="/signup"
-              className="rounded-lg bg-green-700 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-green-800 sm:px-5 sm:text-sm"
-            >
-              সাইন আপ
-            </Link>
-          </div>
+          {/* Authentication Actions */}
+          <AuthActions
+            user={
+              session?.user
+                ? {
+                    name: session.user.name,
+                    email: session.user.email,
+                  }
+                : null
+            }
+          />
         </div>
 
         {/* Category Navigation */}
