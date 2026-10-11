@@ -1,15 +1,46 @@
 
 export interface Category {
   id: string;
-  name: string;
-  [key: string]: unknown;
+  slug: string;
+  nameBn: string;
+  icon: string;
+}
+
+export interface PriceChange {
+  dir: "up" | "down" | "flat";
+  pct: number;
+}
+
+export interface MarketPrice {
+  market: string;
+  division: string;
+  min: number;
+  max: number;
 }
 
 export interface Product {
   id: number;
-  name: string;
-  image: string;
-  price: number;
+  slug: string;
+  nameBn: string;
   category: string;
-  [key: string]: unknown;
+  categoryNameBn: string;
+  categoryIcon: string;
+  unit: string;
+  image: string;
+  today: number;
+  yesterday: number;
+  lastWeek: number;
+  lastMonth: number;
+  change: PriceChange;
+  markets: MarketPrice[];
+}
+
+export type ProductSortOption =
+  | "default"
+  | "price-low"
+  | "price-high";
+
+export interface ApiError {
+  message: string;
+  status?: number;
 }
