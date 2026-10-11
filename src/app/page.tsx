@@ -1,5 +1,6 @@
 
 import Navbar from "@/components/layout/Navbar";
+import CategorySection from "@/components/home/CategorySection";
 
 export default function Home() {
   return (
@@ -22,6 +23,8 @@ export default function Home() {
           </button>
         </div>
       </section>
+
+      <CategorySection />
     </main>
   );
 }
