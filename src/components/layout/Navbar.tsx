@@ -30,31 +30,39 @@ export default async function Navbar() {
   }).format(new Date());
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white shadow-sm">
+
+      {/* Main Navbar */}
       <Container>
-        {/* Logo and Authentication */}
-        <div className="flex flex-wrap items-center justify-between gap-4 py-4">
-          <Link href="/" className="shrink-0">
-            <h1 className="text-2xl font-extrabold text-green-800 sm:text-3xl">
+        <div className="flex min-h-[76px] items-center justify-between gap-4 py-3">
+
+          {/* Logo and Date */}
+          <Link
+            href="/"
+            aria-label="বাজার দর হোমপেজ"
+            className="shrink-0"
+          >
+            <h1 className="text-2xl font-extrabold tracking-tight text-green-800 sm:text-3xl">
               🛒 বাজার দর
             </h1>
 
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs font-medium text-gray-500">
               {today}
             </p>
           </Link>
 
-          <div className="flex items-center gap-2">
+          {/* Authentication Buttons */}
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <Link
               href="/signin"
-              className="rounded-lg border border-green-700 px-3 py-2 text-sm font-semibold text-green-800 transition hover:bg-green-50 sm:px-4"
+              className="rounded-lg border border-green-700 px-3 py-2 text-xs font-semibold text-green-800 transition-colors hover:bg-green-50 sm:px-5 sm:text-sm"
             >
               সাইন ইন
             </Link>
 
             <Link
               href="/signup"
-              className="rounded-lg bg-green-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-green-800 sm:px-4"
+              className="rounded-lg bg-green-700 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-green-800 sm:px-5 sm:text-sm"
             >
               সাইন আপ
             </Link>
@@ -68,7 +76,9 @@ export default async function Navbar() {
       </Container>
 
       {/* Infinite Price Ticker */}
-      <PriceTicker products={products} />
+      {products.length > 0 && (
+        <PriceTicker products={products} />
+      )}
     </header>
   );
 }
