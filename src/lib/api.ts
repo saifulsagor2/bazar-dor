@@ -13,10 +13,7 @@ function extractArray<T>(
     return response as T[];
   }
 
-  if (
-    typeof response === "object" &&
-    response !== null
-  ) {
+  if (typeof response === "object" && response !== null) {
     const data = response as Record<string, unknown>;
 
     for (const key of possibleKeys) {
@@ -45,7 +42,9 @@ async function fetchAPI<T>(
   const response = await fetch(
     `${API_BASE_URL}${endpoint}`,
     {
-      cache: "no-store",
+      next: {
+        revalidate: 300,
+      },
     }
   );
 
@@ -112,7 +111,6 @@ export async function getProductById(
 
     const data = response as Record<string, unknown>;
 
-    // API response may contain the product inside data
     if (
       typeof data.data === "object" &&
       data.data !== null
@@ -120,7 +118,6 @@ export async function getProductById(
       return data.data as unknown as Product;
     }
 
-    // API may return the product directly
     if ("id" in data) {
       return data as unknown as Product;
     }
